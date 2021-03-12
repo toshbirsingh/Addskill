@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Currency Converter</title>
+    </head>
+    <style>
+        #amt{
+            display: flex;
+        }
+    </style>
+    <script>
+        function convert(){
+            var conversion_array=[];
+            conversion_array.push([1,72.67,109.04,0.72]);
+            conversion_array.push([0.014,1,1.5,0.0099]);
+            conversion_array.push([0.0092,0.67,1,0.0066]);
+            conversion_array.push([1.39,100.88,151.38,1]);
+            var c1 = document.getElementById("currency1").selectedIndex;
+            var c2 = document.getElementById("currency2").selectedIndex;
+            var input_amount = parseInt(document.getElementById("initial").value);
+            console.log(input_amount+" "+conversion_array[c1][c2]);
+            var amount=conversion_array[c1][c2]*input_amount;
+
+            document.getElementById("convert").value=amount;
+            
+        }
+        
+
+    </script>
+    <body>
+        <label for="currency1">Choose Currency 1:</label>
+
+        <select id="currency1">
+            <option value="USD">US Dollars</option>
+            <option value="INR">Indian Rupee</option>
+            <option value="JPY">Japanese Yen</option>
+            <option value="GBP">Pound Sterling</option>
+        </select>
+
+        <label for="currency2">Choose Currency 2:</label>
+
+        <select id="currency2">
+            <option value="USD">US Dollars</option>
+            <option value="INR">Indian Rupee</option>
+            <option value="JPY">Japanese Yen</option>
+            <option value="GBP">Pound Sterling</option>
+        </select>
+        <br>
+        <div id="amt">
+            <h5>Enter Amount:</h5><input type="text" id="initial">
+            <h5>Converted Amount:</h5><input type="text" readonly id="convert">
+            <input type="button" value="CONVERT" onclick="convert()">
+        </div>
+        
+    </body>
+</html>
