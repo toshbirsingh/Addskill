@@ -5,7 +5,7 @@
     <body>
         <input type="file" name="" id="inputfile" onchange="ReadFile()">
         <div id="filecontent" contenteditable="true">
-            <ul id="custommenu"></ul>
+            
         </div>  
         
     </body>
@@ -32,7 +32,7 @@
                 console.log(text);
                 let invalidWords;
                 const apiKey = "XDaFVgD2EnMvPJEE"
-                const apiUrl = "https://api.textgears.com/grammar?key="+apiKey+"&text="+text+"&language=en-GB";
+                const apiUrl = "https://api.textgears.com/spelling?key="+apiKey+"&text="+text+"&language=en-GB";
                 $.ajax({
                     url: apiUrl,
                     method: "GET",
@@ -42,7 +42,8 @@
                             invalidWords=result.response.errors;
                             for(let invalidWord of invalidWords){
                                 sen=sen.replace(
-                                    invalidWord.bad,`<span class="invalid-word">${invalidWord.bad}</span>`
+                                    invalidWord.bad,
+                                    `<span class="invalid-word">${invalidWord.bad}</span>`
                                 );
                             }
                             filecontent.innerHTML=sen;
@@ -53,7 +54,7 @@
                                 (event)=>{
                                     console.log(event.clientX + " " + event.clientY);
                                     event.preventDefault();
-                                    $('#custommenu > ul').empty();
+                                    $("#custommenu > ul").empty();
                                     for(let j=0;j<invalidWords[i].better.length;j++){
                                         $("#custommenu > ul").append(`<li wordtoreplace="${invalidWords[i].bad}" class="suggestion-list">${invalidWords[i].better[j]}</li>`);
                                     }

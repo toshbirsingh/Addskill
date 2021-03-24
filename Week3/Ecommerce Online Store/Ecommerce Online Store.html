@@ -28,6 +28,17 @@
       background-color: #f2f2f2;
       padding: 25px;
     }
+
+    .wronginput:focus { 
+        outline: none !important;
+        border-color: lightcoral;
+        box-shadow: 0 0 4px lightcoral;
+    }
+    
+    .hovercolor {
+          background-color: lightblue;
+    }
+
     .dropbtn {
           padding: 16px;
           font-size: 15px;
@@ -72,47 +83,7 @@
     } 
   </style>
 </head>
-<script>
-  localStorage.clear();
-  let history=new Set();
-  let start='';
-  let end='';
 
-  function search() {
-  var input, filter, list, product, i; 
-  input = document.getElementById("form1");
-  filter = input.value.toUpperCase();
-  list = document.getElementById("productList");
-  product = list.getElementsByClassName("product");
-  for (i = 0; i < product.length; i++) 
-    if (product[i].id.toUpperCase().indexOf(filter)==0) {
-      product[i].style.display = ""
-      if (filter!='' && product[i].id.toUpperCase()==filter){
-        history.add(product[i].id)            
-        console.log(history);
-      } 
-    }
-    else {
-      product[i].style.display = "none";
-    }
-  }
-
-  function add(item) {
-    if(localStorage.getItem(item)==null){
-      localStorage.setItem(item,1);
-    }
-    else {
-      localStorage.setItem(item,parseInt(localStorage.getItem(item))+1)
-    }
-
-  }
-
-  function drop() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  };
-
-
-</script>
 
 <body>
 
@@ -137,13 +108,15 @@
           <li><div class="form-outline">
             <input type="search" id="form1" class="form-control" onkeyup="search()" placeholder="Search Veggie or Fruit"
             aria-label="Search" style="margin-top:10px; margin-left:20px; width:300px; height:30px;" />
-          </div></li>
-          <li><div class="dropdown">
+          </div>
+        </li>
+          <li>
+            <div class="dropdown">
             <button onclick="drop()" class="dropbtn" id="choicebtn">Category</button>
                 <div id="myDropdown" class="dropdown-content">
                   <p id="allcat">All</p>
                   <p id="fruit">Fruits</p>
-                  <p id="veggie">Vegetables</p>
+                  <p id="vegetable">Vegetables</p>
                 </div>
           </div> </li>
         </ul>
@@ -162,7 +135,7 @@
         <div class="panel panel-primary ">
           <div class="panel-heading">Tomatoes </div>
           <div class="panel-body"><img src="cart Images/tomato.jpg" class="img-responsive"
-              style="width:100%; height: 250px;" alt="Image"></div>
+              style="width:100%; height: 250px;" alt="Image" onmouseover="onHover('tomatoDiv')" onmouseout="onHoverout('tomatoDiv')"></div>
           <div class="panel-footer">
             <button id="tomatoButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button>
           </div>
@@ -172,7 +145,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Cucumber</div>
           <div class="panel-body"><img src="cart Images/cucumber.jpg" class="img-responsive"
-              style="width:100%;  height: 250px;" alt="Image"></div>
+              style="width:100%;  height: 250px;" alt="Image" onmouseover="onHover('cucumberDiv')" onmouseout="onHoverout('cucumberDiv')"></div>
           <div class="panel-footer">
             <button id="cucumberButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button></div>
         </div>
@@ -181,7 +154,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Chilli's</div>
           <div class="panel-body"><img src="cart Images/chilli.jpg" class="img-responsive"
-              style="width:100%; height: 250px" alt="Image"></div>
+              style="width:100%; height: 250px" alt="Image" onmouseover="onHover('chilliDiv')" onmouseout="onHoverout('chilliDiv')"></div>
           <div class="panel-footer">
             <button id="chilliButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button></div>
         </div>
@@ -191,11 +164,11 @@
 
   <div class="container">
     <div class="row">
-      <div id="strawberyDiv" class="col-sm-4 product fruit">
+      <div id="strawberryDiv" class="col-sm-4 product fruit">
         <div class="panel panel-primary ">
           <div class="panel-heading">Strawberry's </div>
           <div class="panel-body"><img id="strawberyImg" src="cart Images/strawbery.jpg" class="img-responsive"
-              style="width:100%; height: 250px;" alt="Image"></div>
+              style="width:100%; height: 250px;" alt="Image" onmouseover="onHover('strawberryDiv')" onmouseout="onHoverout('strawberryDiv')"></div>
           <div class="panel-footer">
             <button id="strawberryButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button></div>
         </div>
@@ -204,7 +177,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Mango's</div>
           <div class="panel-body"><img src="cart Images/mango.jpg" class="img-responsive"
-              style="width:100%;  height: 250px;" alt="Image"></div>
+              style="width:100%;  height: 250px;" alt="Image" onmouseover="onHover('mangoDiv')" onmouseout="onHoverout('mangoDiv')"></div>
           <div class="panel-footer">
             <button id="mangoButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button></div>
         </div>
@@ -213,7 +186,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Pineapple's</div>
           <div class="panel-body"><img src="cart Images/pineapple.jpg" class="img-responsive"
-              style="width:100%; height: 250px" alt="Image"></div>
+              style="width:100%; height: 250px" alt="Image" onmouseover="onHover('pineappleDiv')" onmouseout="onHoverout('pineappleDiv')"></div>
           <div class="panel-footer">
             <button id="pineappleButton" type="button" class="btn btn-primary" onclick="add(id)">Add to cart</button></div>
         </div>
@@ -224,12 +197,145 @@
 
   <footer class="container-fluid text-center">
     <p>Online Store Copyright</p>
-    <form class="form-inline">Get deals:
-      <input type="email" class="form-control" size="50" placeholder="Email Address">
-      <button type="button" class="btn btn-danger">Sign Up</button>
+    <form id="signupform" class="form-inline">Get deals:
+      <input type="email" id="emailinput" class="form-control" size="50" placeholder="Email Address">
+      <button type="button" class="btn btn-danger" id="signupbutton">Sign Up</button>
     </form>
   </footer>
 
 </body>
+<script>
+  localStorage.clear();
+  let history=new Set();
+  let start='';
+  let end='';
+
+  function search() {
+  var input, filter, list, product, i; 
+  input = document.getElementById("form1");
+  filter = input.value.toUpperCase();
+  list = document.getElementById("productList");
+  product = list.getElementsByClassName("product");
+  for (i = 0; i < product.length; i++) 
+    if (product[i].id.toUpperCase().indexOf(filter)==0) {
+      product[i].style.display = ""
+      if (filter!='' && product[i].id.toUpperCase()==filter){
+        history.add(product[i].id)            
+        console.log(history);
+      } 
+    }
+    else {
+      product[i].style.display = "none";
+    }
+  };
+
+  function add(item) {
+    if(localStorage.getItem(item)==null){
+      localStorage.setItem(item,1);
+    }
+    else {
+      localStorage.setItem(item,parseInt(localStorage.getItem(item))+1)
+    }
+
+  };
+
+  function drop() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  };
+
+  function onHover(id){
+        document.getElementById(id).classList.add("hovercolor");
+        start=new Date()
+    };
+    
+    function onHoverout(id){
+        document.getElementById(id).classList.remove("hovercolor");
+        final=new Date()
+        console.log(((final.getTime()-start.getTime())/1000)+" secs");
+    };
+
+  window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }; 
+    
+    fruit.addEventListener("click",()=>{
+        
+        document.getElementById("choicebtn").textContent="Fruits"
+        let prd=document.getElementsByClassName("product");
+                
+        for(let i=0;i<prd.length;i++){
+            
+            if (prd[i].classList.contains("fruit")){
+                prd[i].style.display = ""
+            }
+            else{
+                prd[i].style.display = "none"
+            }
+        }
+    });
+    
+    vegetable.addEventListener("click",()=>{
+        
+        document.getElementById("choicebtn").textContent="Vegetables"
+        let prd=document.getElementsByClassName("product");
+        
+        for(let i=0;i<prd.length;i++){
+            
+            if (prd[i].classList.contains("vegetable")){
+                prd[i].style.display = ""
+            }
+            else{
+                prd[i].style.display = "none"
+            }
+        }
+    });
+    
+    allcat.addEventListener("click",()=>{
+        
+        document.getElementById("choicebtn").textContent="Category"
+        let prd=document.getElementsByClassName("product");
+        
+        for(let i=0;i<prd.length;i++){
+            prd[i].style.display = ""
+        }            
+    });    
+    
+    
+    signupbutton.addEventListener("click",function(event){
+                
+        let form = document.forms.signupform;
+        
+        if(form.elements.emailinput.value.indexOf("@") == -1){
+            
+            form.elements.emailinput.classList.add("wronginput");
+            form.elements.emailinput.focus();
+            
+        }
+
+        else{
+            
+            form.elements.emailinput.blur();
+            
+            }
+        });
+    
+    emailinput.addEventListener("click",function(){
+        
+            let form = document.forms.signupform;
+            form.elements.emailinput.classList.remove("wronginput");
+        
+    });
+
+
+</script>
 
 </html>
