@@ -44,191 +44,109 @@
     </style>
 
     <script type="text/javascript">
-        let computationMap = new Map();
-        class Calculator {
-            _num1 = null;
-            _num2 = null;
-            constructor(num1, num2) {
-                this._num1 = num1;
-                this._num2 = num2;
-            }
-            set setNum1(value) {
-                this._num1 = value;
-            }
-            set setNum2(value) {
-                this._num2 = value;
-            }
-            get getNum1() {
-                return this._num1;
-            }
-            get getNum2() {
-                return this._num2;
-            }
-            get getSum() {
-                return this.getNum1 + this.getNum2;
-            }
-            get getSub() {
-                return this.getNum1 - this.getNum2;
-            }
-            get getProduct() {
-                return this.getNum1 * this.getNum2;
-            }
-            get getQuotient() {
-                return this.getNum1 / this.getNum2;
-            }
-            get getPi() {
-                return Math.PI;
-            }
-            get getSin() {
-                return Math.sin();
-            }
-            get getCos() {
-                return Math.cos();
-            }
-            get getTan() {
-                return Math.tan();
-            }
-            addNumbers = function () {
-                return this.getSum;
-            }
-            subtractNumbers = function () {
-                return this.getSub;
-            }
-            multiplyNumbers = function () {
-                return this.getProduct;
-            }
-            divideNumbers = function () {
-                return this.getQuotient;
-            }
-            
+        var charData=" ";
+        var resultData=" ";
+        var historyData=[];
+
+        function evaluates(a){
+            forms.screen.value+=a;
+            character=forms.screen.value;
+            charData=character;
+        }
+        function del(){
+            var num=forms.screen.value;
+            forms.screen.value=num.substring(0,num.length-1);
+        }
+        function ac(){
+            forms.screen.value=" ";
+        }
+        function equal(){
+            var calc=forms.screen.value;
+            var result=eval(calc);
+            forms.screen.value=result;
+            resultData=result;
+            historyData.push({"character":charData,"results":resultData});
+            showLogData();
 
         }
+        function sin(){
+            var trigon=forms.screen.value;
+            var res=Math.sin(trigon);
+            forms.screen.value=res;
 
-        class ScientificCalculator extends Calculator {
-            powerOfNumber = function () {
-                return this.getNum1 ** this.getNum2;
-            }
         }
+        function cos(){
+            var trigon=forms.screen.value;
+            var res=Math.cos(trigon);
+            forms.screen.value=res;
 
-        function showValueOrOperation(value) {
-            try {
-                if (isNaN(parseInt(value))) {
-                    if (!computationMap.has("operator")) {
-                        computationMap.set("operator", value);
-                    }
-                }
-                else {
-                    if (!computationMap.has("number1")) {
-                        computationMap.set("number1", value);
-                    }
-                    else if (!computationMap.has("number2")) {
-                        computationMap.set("number2", value);
-                    }
-                }
-
-            }
-            catch (error) {
-                document.getElementById("calc-disply-value").value = "There's been an error";
-                console.log(error);
-            }
-            finally {
-                let currentValue = document.getElementById("calc-disply-value").value;
-                let displayValue = currentValue + value;
-                document.getElementById("calc-disply-value").value = displayValue;
-            }
         }
+        function tan(){
+            var trigon=forms.screen.value;
+            var res=Math.tan(trigon);
+            forms.screen.value=res;
 
-        function Calulate() {
-            let number2 = parseInt(computationMap.get("number2"));
-            let operator = computationMap.get("operator");
-            let number1 = parseInt(computationMap.get("number1"));
-            let calculator = new Calculator(number1, number2);
-            let scientificCalculator = new ScientificCalculator(number1, number2);
-            switch (operator) {
-                case "+":
-                    document.getElementById("calc-disply-value").value = "calculating...";
-                    let promise = new Promise(
-                        function (resolve, reject) {
-                            setTimeout(
-                                ()=>{
-                                    var result = calculator.addNumbers();
-                                    resolve(result);
-                                }, 1000);
-                        }).then(
-                            function (result) {
-                                computationMap.get("number1") ?? computationMap.set("number1", result);
-                                document.getElementById("calc-disply-value").value = result;
-                            }
-                        );
-                    break;
-                case "-":
-                    var result = calculator.subtractNumbers();
-                    document.getElementById("calc-disply-value").value = result;
-                    break;
-                case "*":
-                    var result = calculator.multiplyNumbers();
-                    document.getElementById("calc-disply-value").value = result;
-                    break;
-                case "/":
-                    var result = calculator.divideNumbers();
-                    document.getElementById("calc-disply-value").value = result;
-                    break;
-                case "**":
-                    var result = scientificCalculator.powerOfNumber();
-                    document.getElementById("calc-disply-value").value = result;
-                    break;
-            }
-            computationMap.clear();
-            computationMap.get("number1") ?? computationMap.set("number1", result);
         }
+        function pi(){
+            var pai=forms.screen.value*3.141;
+            forms.screen.value=pai;
+        }
+        function showLogData(){
+            localStorage.setItem("textInput",JSON.stringify(historyData));
+
+        }   
     </script>
 
 </head>
 
 
 <body>
+    <div class="container">
+    <form name="forms" class="res">
     <table border="1">
         <tr>
-            <td style="width:55px"><input type="button" value="**" onclick="showValueOrOperation('**')" /> </td>
-            <td colspan="3"><input type="text" id="calc-disply-value" /></td>
+            <td style="width:55px"><input type="button" value="**" onclick="evaluates('')" /> </td>
+            <td colspan="3"><input type="text" id="calc-disply-value screen" name="screen"/></td>
         </tr>
         <tr>
-            <td><input type="button" value="+" onclick="showValueOrOperation('+')" /> </td>
-            <td><input type="button" value="1" onclick="showValueOrOperation('1')" /> </td>
-            <td><input type="button" value="2" onclick="showValueOrOperation('2')" /> </td>
-            <td><input type="button" value="3" onclick="showValueOrOperation('3')" /> </td>
+            <td><input type="button" value="+" onclick="evaluates('+')" /> </td>
+            <td><input type="button" value="1" onclick="evaluates('1')" /> </td>
+            <td><input type="button" value="2" onclick="evaluates('2')" /> </td>
+            <td><input type="button" value="3" onclick="evaluates('3')" /> </td>
         </tr>
         <tr>
-            <td><input type="button" value="-" onclick="showValueOrOperation('-')" /> </td>
-            <td><input type="button" value="4" onclick="showValueOrOperation('4')" /> </td>
-            <td><input type="button" value="5" onclick="showValueOrOperation('5')" /> </td>
-            <td><input type="button" value="6" onclick="showValueOrOperation('6')" /> </td>
+            <td><input type="button" value="-" onclick="evaluates('-')" /> </td>
+            <td><input type="button" value="4" onclick="evaluates('4')" /> </td>
+            <td><input type="button" value="5" onclick="evaluates('5')" /> </td>
+            <td><input type="button" value="6" onclick="evaluates('6')" /> </td>
         </tr>
         <tr>
-            <td><input type="button" value="*" onclick="showValueOrOperation('*')" /> </td>
-            <td><input type="button" value="7" onclick="showValueOrOperation('7')" /> </td>
-            <td><input type="button" value="8" onclick="showValueOrOperation('8')" /> </td>
-            <td><input type="button" value="9" onclick="showValueOrOperation('9')" /> </td>
+            <td><input type="button" value="*" onclick="evaluates('*')" /> </td>
+            <td><input type="button" value="7" onclick="evaluates('7')" /> </td>
+            <td><input type="button" value="8" onclick="evaluates('8')" /> </td>
+            <td><input type="button" value="9" onclick="evaluates('9')" /> </td>
         </tr>
         <tr>
-            <td><input type="button" value="/" onclick="showValueOrOperation('/')" /> </td>
-            <td><input type="button" value="." onclick="showValueOrOperation('.')" /> </td>
-            <td><input type="button" value="0" onclick="showValueOrOperation('0')" /> </td>
-            <td><input type="button" value="=" onclick="Calulate()" /> </td>
+            <td><input type="button" value="/" onclick="evaluates('/')" /> </td>
+            <td><input type="button" value="." onclick="evaluates('.')" /> </td>
+            <td><input type="button" value="0" onclick="evaluates('0')" /> </td>
+            <td><input type="button" value="=" onclick="equal()" /> </td>
         </tr>
         <tr>
-            <td><input type="button" value="pi" onclick="showValueOrOperation('pi')" /> </td>
-            <td><input type="button" value="Sin" onclick="showValueOrOperation('Sin')" /> </td>
-            <td><input type="button" value="Cos" onclick="showValueOrOperation('Cos')" /> </td>
-            <td><input type="button" value="Tan" onclick="showValueOrOperation('Tan')" /> </td>
+            <td><input type="button" value="pi" onclick="pi()" /> </td>
+            <td><input type="button" value="Sin" onclick="sin()" /> </td>
+            <td><input type="button" value="Cos" onclick="cos()" /> </td>
+            <td><input type="button" value="Tan" onclick="tan()" /> </td>
         </tr>
         <tr>
-            <td><input type="button" value="" onclick="showValueOrOperation('')" /> </td>
-            <td><input type="button" value="(" onclick="showValueOrOperation('(')" /> </td>
-            <td><input type="button" value=")" onclick="showValueOrOperation(')')" /> </td>
-            <td><input type="button" value="C" onclick="showValueOrOperation('C')" /> </td>
+            <td><input type="button" value="AC" onclick="ac()" /> </td>
+            <td><input type="button" value="(" onclick="evaluates('(')" /> </td>
+            <td><input type="button" value=")" onclick="evaluates(')')" /> </td>
+            <td><input type="button" value="C" onclick="del()" /> </td>
         </tr>
     </table>
   <div id="bitnami-banner" data-banner-id="3aba2">  <style>#bitnami-banner {z-index:100000;height:80px;padding:0px;width:120px;background:transparent;position:fixed;right:0px;bottom:0px;border:0px solid #EDEDED;} #bitnami-banner .bitnami-corner-image-div {position:fixed;right:0px;bottom:0px;border:0px;z-index:100001;height:110px;} #bitnami-banner .bitnami-corner-image-div .bitnami-corner-image {position:fixed;right:0px;bottom:0px;border:0px;z-index:100001;height:110px;} #bitnami-close-banner-button {height:12px;width:12px;z-index:10000000000;position:fixed;right:5px;bottom:65px;display:none;cursor:pointer}</style>  <img id="bitnami-close-banner-button" src="/bitnami/images/close.png"/>  <div class="bitnami-corner-image-div">     <a href="/bitnami/index.html" target="_blank">       <img class="bitnami-corner-image" alt="Bitnami" src="/bitnami/images/corner-logo.png"/>     </a>  </div>  <script type="text/javascript" src="/bitnami/banner.js"> </script> </div>   </body>
-
+</form> 
+</div>
+</body>
 </html>
